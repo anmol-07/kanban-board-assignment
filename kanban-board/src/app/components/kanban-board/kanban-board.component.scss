@@ -1,0 +1,60 @@
+.board-outer {
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+    background: #f1f1f1;
+    
+    .board-heading-add-todo {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 30px;
+    }
+
+    .board-inner {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+.column {
+    width: 30%;
+    padding: 16px;
+    border: 1px solid;
+    margin: 0 2px;
+    border-radius: 5px;
+    &:hover {
+        background: #e8f4ff;
+        border: 2px dashed #007bff;
+    }
+}
+
+
+
+.todo-card {
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    max-width: calc(100% - 20px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #609cd0;
+    color: #fff;
+    cursor: grab;
+    .todo-card-title {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 80%;
+        display: inline-block;
+        overflow-x: hidden;
+    }
+    &:active {
+        cursor: grabbing;
+    }
+
+    .card-delete-icon {
+        cursor: pointer;
+    }
+}
