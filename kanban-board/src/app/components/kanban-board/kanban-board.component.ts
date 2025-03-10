@@ -42,8 +42,13 @@ export class KanbanBoardComponent implements OnInit {
   }
 
   async deleteTodo(id: number) {
+    try {
     await this.todoService.deleteTodo(id);
-    this.todos = this.todos.filter(todo => todo.id !== id);
+    } catch(e) {
+      console.log(`Some error in API`);
+    } finally {  //Added Error Handling
+      this.todos = this.todos.filter(todo => todo.id !== id);
+    }
   }
 
   getFilteredTodos(status: string) {

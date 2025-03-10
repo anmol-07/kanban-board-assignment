@@ -9,20 +9,22 @@
         <div *ngFor="let column of columns" class="column" 
             (dragover)="allowDrop($event)" 
             (drop)="onDrop($event, column)">
-            <h3>{{ column }}</h3>
-            <p *ngIf="getFilteredTodos(column).length === 0" class="empty-message">
-                No tasks in "{{ column }}" status.
-            </p>
-            <div *ngFor="let todo of getFilteredTodos(column)" class="todo-card"
-                draggable="true" 
-                (dragstart)="onDragStart($event, todo)">
-                <span class="todo-card-title" [title]="todo.todo">{{ todo.todo }}</span>
-                <span class="card-delete-icon" (click)="openAddTodoDialog(todo.id)" >
-                    <img src="assets/edit-icon.svg">
-                </span>
-                <span class="card-delete-icon" (click)="deleteTodo(todo.id)">
-                    <img src="assets/delete-icon.svg">
-                </span>
+            <div class="column-inner">
+                <h3>{{ column }}</h3>
+                <p *ngIf="getFilteredTodos(column).length === 0" class="empty-message">
+                    No tasks in "{{ column }}" status.
+                </p>
+                <div *ngFor="let todo of getFilteredTodos(column)" class="todo-card"
+                    draggable="true" 
+                    (dragstart)="onDragStart($event, todo)">
+                    <span class="todo-card-title" [title]="todo.todo">{{ todo.todo }}</span>
+                    <span class="card-delete-icon" (click)="openAddTodoDialog(todo.id)" >
+                        <img src="assets/edit-icon.svg">
+                    </span>
+                    <span class="card-delete-icon" (click)="deleteTodo(todo.id)">
+                        <img src="assets/delete-icon.svg">
+                    </span>
+                </div>
             </div>
         </div>
     </div>
