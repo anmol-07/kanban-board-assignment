@@ -31,16 +31,11 @@ export class KanbanBoardComponent implements OnInit {
     console.log(`todos are: `, this.todos);
   }
 
-  async addTodo(title: string) {
-    const newTodo = await this.todoService.addTodo({ title, status: 'Pending' });
-    this.todos.push(newTodo.data);
-  }
-
-  async updateTodoStatus(todo: any, newStatus: string) {
-    await this.todoService.updateTodo(todo.id, { status: newStatus });
-    todo.status = newStatus;
-  }
-
+  /**
+   * 
+   * @param id 
+   * Function to delete TODO from the List by calling the service
+   */
   async deleteTodo(id: number) {
     try {
     await this.todoService.deleteTodo(id);
@@ -51,20 +46,38 @@ export class KanbanBoardComponent implements OnInit {
     }
   }
 
+  /**
+   * 
+   * @param status 
+   * @returns Filtered todo list wrt to the column
+   * Also updates as soon as TODO is added or updated
+   */
   getFilteredTodos(status: string) {
     return this.todos.filter(todo => todo.status === status);
   }
 
+  /**
+   * 
+   * @param event 
+   * @param todo 
+   * Function to detect Drag event
+   */
   onDragStart(event: DragEvent, todo: any) {
     event.dataTransfer?.setData("text/plain", todo.id.toString());
   }
 
-  /** ✅ Allow drop by preventing default behavior */
+  /**  Function to prevent default behavior on drop */
   allowDrop(event: DragEvent) {
     event.preventDefault();
   }
 
-  /** ✅ Handle drop event: Move todo to the new column */
+  /**
+   * 
+   * @param event 
+   * @param newStatus 
+   * @returns 
+   * Function to handle drop event: Move todo to the new column
+   */
   async onDrop(event: DragEvent, newStatus: string) {
     event.preventDefault();
 
@@ -76,13 +89,18 @@ export class KanbanBoardComponent implements OnInit {
 
     todo.status = newStatus;
     
-    // Optionally update on the backend
+    // Update the status of the todo on the backend 
     await this.todoService.updateTodo(todo.id, { 
       completed: newStatus === TaskStatus.Completed ? true : false
     });
   }
 
-  /** ✅ Open Dialog to Add a New Todo */
+  /**
+   * 
+   * @param todoId 
+   * Function to open the modal which solve dual purpose
+   * i.e. it helps in both updating and adding a new TODO
+   */
   openAddTodoDialog(todoId: number | undefined = undefined) {
     const todoToBeUpdated = this.todos.find(t => t.id === todoId);
     const dialogRef = this.dialog.open(AddUpdateTodoDialogComponent, {
@@ -91,6 +109,7 @@ export class KanbanBoardComponent implements OnInit {
       data: todoToBeUpdated ? todoToBeUpdated : {}
     });
 
+    //Check response from Material Dialog
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
         if(result.status === TaskStatus.Completed) result.completed = true;

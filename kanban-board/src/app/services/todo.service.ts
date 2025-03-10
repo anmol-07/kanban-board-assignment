@@ -4,7 +4,7 @@ import axios from 'axios';
 @Injectable({
   providedIn: 'root'
 })
-export class TodoService {
+export class TodoService {    //Service created to have all the API calls separtely rather than in each file where we need to have the API call
   private apiUrl = 'https://dummyjson.com/todos';
 
   async getTodos() {

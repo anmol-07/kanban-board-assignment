@@ -21,6 +21,7 @@ export class AddUpdateTodoDialogComponent {
     private dialogRef: MatDialogRef<AddUpdateTodoDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    //Validations added for title and status
     this.todoForm = this.fb.group({
       title: [data?.todo || '', Validators.required],
       status: [data?.status || TaskStatus.Pending, Validators.required]
